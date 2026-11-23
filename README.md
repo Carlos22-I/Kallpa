@@ -119,8 +119,8 @@ Sin API key funciona la descripción por texto (modelo local). Con API key se ac
 
 ## Equipo
 
-- Integrante 1 — rol
-- Integrante 2 — rol
-- Integrante 3 — rol
+- Carlos Daniel Huachallanqui Olivera
+- Maria Magdalena Villegas Huamani
+- Yaison Terry Huamani Carhuaricra
 
 Licencia MIT.
