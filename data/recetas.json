@@ -1,0 +1,13 @@
+{
+  "_nota": "Recetas sugeridas por el equipo con alimentos de la zona andina. Validar porciones y preparación con el nutricionista del establecimiento antes de un piloto.",
+  "recetas": [
+    {"id": "r1", "nombre": "Tortilla de sangrecita con espinaca", "ingredientes": {"sangrecita": 30, "huevo": 25, "espinaca": 15}, "acompanar": "naranja", "edad_min_meses": 6, "pasos": "Sancocha la sangrecita, desmenúzala y mézclala con huevo batido y espinaca picada. Cocina en sartén con poco aceite. Para menores de 9 meses, aplástala bien."},
+    {"id": "r2", "nombre": "Puré de papa amarilla con hígado de pollo", "ingredientes": {"higado_pollo": 30, "papa": 80, "zanahoria": 20}, "acompanar": "papaya", "edad_min_meses": 6, "pasos": "Cocina el hígado y aplástalo con tenedor. Mezcla con el puré de papa y zanahoria. Sirve como papilla espesa (no en sopa)."},
+    {"id": "r3", "nombre": "Quinua atamalada con bazo", "ingredientes": {"bazo": 30, "quinua": 80, "zanahoria": 20}, "acompanar": "mandarina", "edad_min_meses": 8, "pasos": "Cocina la quinua espesa. Agrega el bazo cocido y picado fino. Termina con zanahoria rallada."},
+    {"id": "r4", "nombre": "Lentejas espesas con charqui desmenuzado", "ingredientes": {"lentejas": 60, "charqui": 20, "arroz": 50}, "acompanar": "limon", "edad_min_meses": 12, "pasos": "Remoja el charqui para quitar sal, cocínalo y desmenúzalo. Mezcla con lentejas espesas. Exprime limón al servir."},
+    {"id": "r5", "nombre": "Chanfainita suave de bofe", "ingredientes": {"bofe": 30, "papa": 80}, "acompanar": "naranja", "edad_min_meses": 12, "pasos": "Cocina el bofe hasta que esté muy suave y pícalo fino. Guísalo con papa en cubitos, sin ají para los más pequeños."},
+    {"id": "r6", "nombre": "Mazamorra de kiwicha con aguaymanto", "ingredientes": {"kiwicha": 60, "aguaymanto": 30}, "acompanar": "aguaymanto", "edad_min_meses": 9, "pasos": "Cocina la kiwicha con agua hasta espesar. Sirve con aguaymanto picado. Es un complemento: acompáñala en el día con un alimento de origen animal rico en hierro."},
+    {"id": "r7", "nombre": "Trucha sancochada con olluquito", "ingredientes": {"trucha": 40, "olluco": 60, "arroz": 40}, "acompanar": "limon", "edad_min_meses": 9, "pasos": "Retira bien las espinas. Desmenuza la trucha y sirve con olluquito guisado y arroz."},
+    {"id": "r8", "nombre": "Arroz con sangrecita y habas", "ingredientes": {"sangrecita": 30, "habas": 40, "arroz": 60}, "acompanar": "tuna", "edad_min_meses": 9, "pasos": "Saltea sangrecita cocida con cebolla y ajo. Mezcla con arroz y habas cocidas peladas."}
+  ]
+}

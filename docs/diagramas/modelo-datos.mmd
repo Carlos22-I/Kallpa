@@ -1,0 +1,37 @@
+erDiagram
+    CHILDREN ||--o{ MEALS : registra
+    CHILDREN ||--o{ SUPPLEMENTS : registra
+    CHILDREN {
+        text id PK
+        text family_code UK "K-XXXXXX, sin DNI"
+        text alias
+        date birth_date
+        text sector
+        text hb_status "lo registra el establecimiento"
+        real hb_value
+        text supplement_scheme
+        date next_control
+        real home_lat "aproximada, solo panel"
+        real home_lng
+        int consent
+    }
+    MEALS {
+        text id PK
+        text child_id FK
+        datetime created_at
+        json items "alimento, gramos, hierro"
+        real total_iron
+        real absorbable_iron
+        int score
+        json reasons
+        real confidence
+        text provider
+        text status
+    }
+    SUPPLEMENTS {
+        text id PK
+        text child_id FK
+        date day "único por niño y día"
+        int given
+        text note "molestias"
+    }

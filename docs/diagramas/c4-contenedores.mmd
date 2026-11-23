@@ -1,0 +1,16 @@
+flowchart TB
+    subgraph Navegador
+      A["App familiar<br/>HTML/CSS/JS<br/>compresión de fotos"]
+      P["Panel de salud<br/>HTML/JS + Leaflet<br/>(respaldo SVG)"]
+    end
+    subgraph Servidor["Servidor (Render / Docker)"]
+      API["API Kallpa<br/>Python 3.12 + Flask<br/>monolito hexagonal"]
+      DB[("SQLite<br/>niños, comidas, suplemento<br/>→ PostgreSQL")]
+      FS[("Fotos sin EXIF<br/>→ almacenamiento de objetos")]
+      DATA[("Catálogo de alimentos,<br/>recetas, base de conocimiento<br/>(JSON/MD versionados)")]
+    end
+    EXT["LLM multimodal externo"]
+    A -- "REST + multipart" --> API
+    P -- "REST + X-Panel-Token" --> API
+    API --> DB & FS & DATA
+    API -- "HTTPS · timeout 20 s · circuit breaker" --> EXT

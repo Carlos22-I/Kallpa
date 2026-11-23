@@ -1,0 +1,34 @@
+sequenceDiagram
+    autonumber
+    actor F as Familia
+    participant W as App
+    participant A as API
+    participant U as LogMeal
+    participant R as ResilientAnalyzer
+    participant C as LLM externo
+    participant L as Analizador local
+    participant N as nutrition (dominio)
+    participant P as Repositorios
+    F->>W: Foto del plato y/o texto
+    W->>W: Comprime (1024 px, JPEG 80 %)
+    W->>A: POST /familias/{código}/comidas
+    A->>U: execute(código, texto, foto)
+    U->>U: Valida código, tamaño y tipo
+    U->>R: analyze(texto, foto, catálogo)
+    alt Circuito cerrado
+        R->>C: prompt con catálogo cerrado + imagen
+        C-->>R: JSON {foods:[{id, gramos}], consistencia, privacidad, confianza}
+        R->>R: to_plate_analysis() descarta ids desconocidos y acota valores
+    else Falla / circuito abierto
+        R->>L: extrae alimentos y cantidades del texto
+    end
+    R-->>U: PlateAnalysis (solo percepción)
+    U->>N: build_items + evaluate_meal (tabla de alimentos)
+    N-->>U: hierro total, hemínico, absorbible, puntaje, razones, consejos
+    alt persona_visible
+        U->>U: NO guarda la foto · evento PhotoDiscardedForPrivacy
+    else foto válida
+        U->>P: guarda foto sin EXIF
+    end
+    U->>P: guarda Meal (estado registrada / revisar)
+    A-->>W: 201 resultado explicado + confianza

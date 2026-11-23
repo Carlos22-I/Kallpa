@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: kallpa
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m app.seed --reset && gunicorn -w 1 --threads 8 -b 0.0.0.0:$PORT wsgi:app
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: AI_PROVIDER
+        value: auto
+      - key: PANEL_TOKEN
+        generateValue: true
+      - key: TRUSTED_PROXIES      # Render pone 1 proxy delante: IP real para el límite de solicitudes
+        value: "1"
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_BASE_URL
+        value: https://generativelanguage.googleapis.com/v1beta/openai/
+      - key: OPENAI_MODEL
+        value: gemini-3.1-flash-lite
+      - key: OPENAI_REASONING_EFFORT
+        value: low
+      - key: ANTHROPIC_MODEL
+        value: claude-haiku-5-5

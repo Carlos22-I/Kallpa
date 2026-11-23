@@ -1,0 +1,5 @@
+flowchart LR
+    U["📱 Celular / PC"] -- HTTPS --> G["gunicorn 2×4"] --> APP["Flask (wsgi.py)"]
+    APP --> D[("instance/kallpa.db")]
+    APP --> UP[("uploads/")]
+    APP -- HTTPS --> AI["api.anthropic.com<br/>o proveedor compatible"]
