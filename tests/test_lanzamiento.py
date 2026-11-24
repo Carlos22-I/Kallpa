@@ -140,3 +140,25 @@ def test_semilla_no_llama_a_la_ia_externa(tmp_path, monkeypatch):
     monkeypatch.setenv("ANTHROPIC_API_KEY", "clave-falsa")
     seed.run(reset=True, n=4)
     assert (tmp_path / "codigo_demo.txt").read_text() == "K-DEMO1"
+
+
+# ---------- edad máxima: menores de 5 años, calculado desde hoy ----------
+
+def test_registro_solo_menores_de_cinco_anios(client):
+    from datetime import timedelta
+    from app.application.use_cases import years_before
+
+    base = {"alias": "Kusi", "sector": "Las Américas", "consentimiento": True}
+    five = years_before(TODAY, 5)
+    assert client.post("/api/familias", json={**base, "nacimiento": five.isoformat()}).status_code == 400
+    assert client.post("/api/familias", json={**base, "nacimiento": (five + timedelta(days=1)).isoformat()}).status_code == 201
+    assert client.post("/api/familias", json={**base, "nacimiento": TODAY.isoformat()}).status_code == 201
+    assert client.post("/api/familias", json={**base, "nacimiento": (TODAY + timedelta(days=1)).isoformat()}).status_code == 400
+
+
+def test_years_before_bisiesto():
+    from datetime import date
+    from app.application.use_cases import years_before
+
+    assert years_before(date(2028, 2, 29), 5) == date(2023, 2, 28)
+    assert years_before(date(2026, 11, 23), 5) == date(2021, 11, 23)

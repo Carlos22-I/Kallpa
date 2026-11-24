@@ -33,6 +33,17 @@ MAX_PHOTO = 6 * 1024 * 1024
 ALLOWED_MIME = {"image/jpeg", "image/png", "image/webp"}
 
 
+MAX_AGE_YEARS = 5
+
+
+def years_before(d: date, years: int) -> date:
+    """Misma fecha N años antes (el 29 de febrero pasa al 28 si ese año no es bisiesto)."""
+    try:
+        return d.replace(year=d.year - years)
+    except ValueError:
+        return d.replace(year=d.year - years, day=28)
+
+
 class ValidationError(ValueError):
     pass
 
@@ -69,8 +80,10 @@ class RegisterChild:
         except (TypeError, ValueError) as e:
             raise ValidationError("Fecha de nacimiento inválida (AAAA-MM-DD).") from e
         today = self.clock.today()
-        if bd > today or (today - bd).days > 6 * 365:
-            raise ValidationError("Kallpa acompaña a niños de 0 a 5 años.")
+        if bd > today:
+            raise ValidationError("La fecha de nacimiento no puede ser futura.")
+        if bd <= years_before(today, MAX_AGE_YEARS):
+            raise ValidationError(f"Kallpa acompaña a niños menores de {MAX_AGE_YEARS} años.")
         names = {s["nombre"] for s in self.territory.sectors()}
         if sector not in names:
             raise ValidationError("Sector no reconocido.")

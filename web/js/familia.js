@@ -4,6 +4,11 @@
   const $ = (id) => document.getElementById(id);
   const cfg = await api("/api/config");
   $("n-sector").innerHTML = cfg.sectores.map((s) => `<option>${esc(s.nombre)}</option>`).join("");
+  // Solo menores de 5 años: el rango se calcula con la fecha de hoy, así se actualiza solo cada día.
+  const isoLocal = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const hoy = new Date();
+  $("n-nac").max = isoLocal(hoy);
+  $("n-nac").min = isoLocal(new Date(hoy.getFullYear() - 5, hoy.getMonth(), hoy.getDate() + 1));
   let code = null, file = null, data = null;
   try { code = localStorage.getItem("kallpa_codigo"); } catch (_) { }
   const qs = new URLSearchParams(location.search).get("codigo");
@@ -129,11 +134,19 @@
   $("f-chat").onsubmit = async (e) => {
     e.preventDefault();
     const q = $("preg").value.trim(); if (!q) return;
+    const send = $("f-chat").querySelector("button");
     $("chat").insertAdjacentHTML("beforeend", `<div class="msg yo">${esc(q)}</div>`); $("preg").value = "";
+    // Indicador mientras responde la IA (puede tardar varios segundos con señal débil)
+    const typing = document.createElement("div");
+    typing.className = "msg bot typing"; typing.setAttribute("role", "status");
+    typing.innerHTML = 'Kallpa está pensando<span class="dots"><i></i><i></i><i></i></span>';
+    $("chat").appendChild(typing); $("chat").scrollTop = $("chat").scrollHeight;
+    $("preg").disabled = true; send.disabled = true; send.textContent = "Esperando…";
     try {
       const r = await api("/api/asistente", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pregunta: q, codigo: code }) });
-      $("chat").insertAdjacentHTML("beforeend", `<div class="msg bot">${esc(r.respuesta)}<span class="prov">${esc(r.proveedor)}</span></div>`);
-    } catch (err) { $("chat").insertAdjacentHTML("beforeend", `<div class="msg bot">${esc(err.message)}</div>`); }
+      typing.outerHTML = `<div class="msg bot">${esc(r.respuesta)}<span class="prov">${esc(r.proveedor)}</span></div>`;
+    } catch (err) { typing.outerHTML = `<div class="msg bot">${esc(err.message)}</div>`; }
+    $("preg").disabled = false; send.disabled = false; send.textContent = "Enviar"; $("preg").focus();
     $("chat").scrollTop = $("chat").scrollHeight;
   };
 
