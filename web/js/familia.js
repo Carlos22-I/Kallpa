@@ -8,7 +8,11 @@
   const isoLocal = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   const hoy = new Date();
   $("n-nac").max = isoLocal(hoy);
-  $("n-nac").min = isoLocal(new Date(hoy.getFullYear() - 5, hoy.getMonth(), hoy.getDate() + 1));
+  const limiteEdad = new Date(hoy);
+  limiteEdad.setFullYear(limiteEdad.getFullYear() - 5);
+  if (limiteEdad.getMonth() !== hoy.getMonth()) limiteEdad.setDate(0);
+  limiteEdad.setDate(limiteEdad.getDate() + 1);
+  $("n-nac").min = isoLocal(limiteEdad);
   let code = null, file = null, data = null;
   try { code = localStorage.getItem("kallpa_codigo"); } catch (_) { }
   const qs = new URLSearchParams(location.search).get("codigo");
