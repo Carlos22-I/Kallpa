@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kallpa · Panel del establecimiento de salud</title>
+  <meta name="theme-color" content="#7a1f2b">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><div class="logo">K</div><div><h1>Kallpa · Panel de salud</h1><small>Seguimiento de niños de 6 a 35 meses · Abancay</small></div></div>
+  <nav><a href="/">App familiar</a><a href="#" id="logout">Cambiar token</a></nav>
+</header>
+<main>
+  <div class="grid kpis" id="kpis"></div>
+
+  <div class="grid two" style="margin-top:16px">
+    <section class="card">
+      <h2>📋 Niños priorizados para visita <span class="pill" id="n-ninos">0</span>
+        <select id="f-sector" style="width:auto;margin-left:auto;padding:4px 8px"></select></h2>
+      <p class="muted" style="margin-top:-4px">Prioridad 0–100 con fórmula pública: estado de hemoglobina, adherencia al suplemento, dieta, edad, control vencido y molestias.</p>
+      <div class="list" id="ninos" style="max-height:760px"></div>
+    </section>
+
+    <section class="card">
+      <h2>🗺️ Ruta de visitas domiciliarias</h2>
+      <div class="map" id="map"></div>
+      <div class="row" style="margin-top:10px">
+        <label for="max" style="margin:0">Visitas</label>
+        <input type="number" id="max" value="8" min="2" max="20" style="width:80px">
+        <button class="btn ocre" id="ruta">🚶 Planificar ruta del día</button>
+      </div>
+      <div id="ruta-res"></div>
+      <h2 style="margin-top:16px">📊 Riesgo promedio por sector</h2>
+      <div class="bars" id="sectores"></div>
+      <h2 style="margin-top:16px">🤖 IA: proveedores y costo</h2>
+      <div id="ia" class="muted"></div>
+      <h2 style="margin-top:16px">⚡ Alertas (últimos 7 días)</h2>
+      <div class="feed" id="eventos"></div>
+    </section>
+  </div>
+</main>
+<footer>Kallpa · Panel de demostración · Datos simulados · La app no diagnostica: el estado de hemoglobina lo registra el personal de salud</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/panel.js"></script>
+</body>
+</html>

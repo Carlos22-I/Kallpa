@@ -1,0 +1,10 @@
+flowchart LR
+    F(["👩‍👧 Familia<br/>celular · español o quechua"])
+    S(["👩‍⚕️ Personal de salud<br/>enfermera CRED, nutricionista, actor social"])
+    K["🩸 Kallpa<br/>alimentación con hierro, suplemento,<br/>priorización y visitas"]
+    IA["🤖 Proveedor de IA<br/>Claude / OpenAI-compatible"]
+    OSM["🗺️ OpenStreetMap"]
+    F -- "foto del plato, suplemento, preguntas" --> K
+    S -- "resultado de Hb, prioriza, planifica visitas" --> K
+    K -- "reconocer alimentos (HTTPS/JSON)" --> IA
+    S -. mapa .-> OSM

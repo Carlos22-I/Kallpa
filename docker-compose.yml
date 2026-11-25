@@ -1,0 +1,11 @@
+services:
+  kallpa:
+    build: .
+    ports: ["8000:8000"]
+    env_file: [.env]
+    volumes:
+      - kallpa-data:/app/instance
+      - kallpa-uploads:/app/uploads
+volumes:
+  kallpa-data:
+  kallpa-uploads:

@@ -1,0 +1,29 @@
+flowchart LR
+    subgraph Entrada["Adaptadores de entrada"]
+      R["api/routes.py"]
+      S["api/serializers.py (DTOs)"]
+    end
+    subgraph App["Aplicación"]
+      UC["Casos de uso<br/>RegisterChild · LogMeal · LogSupplement<br/>GetFamilySummary · PrioritizeChildren<br/>UpdateChildClinical · PlanHomeVisits<br/>GetAlerts · GetHealthDashboard · AskAssistant"]
+      PO["Puertos<br/>PlateAnalyzer · FamilyAssistant<br/>Child/Meal/SupplementRepository<br/>FoodCatalog · Territory · PhotoStorage<br/>EventBus · Clock"]
+    end
+    subgraph Dom["Dominio (puro)"]
+      M["Entidades<br/>Child · Meal · SupplementLog<br/>Food · PlateAnalysis · VisitRoute"]
+      DS["Servicios<br/>nutrition · risk<br/>recommender · routing"]
+    end
+    subgraph Salida["Adaptadores de salida"]
+      LLM["LLMPlateAnalyzer / LLMAssistant"]
+      CL["ClaudeClient · OpenAICompatibleClient"]
+      LOC["LocalPlateAnalyzer · LocalAssistant (BM25)"]
+      RES["ResilientAnalyzer / Assistant<br/>cadena + circuit breaker"]
+      SQL["Sqlite*Repository"]
+      MISC["JsonFoodCatalog · JsonTerritory<br/>LocalPhotoStorage · InMemoryEventBus<br/>LimaClock / FixedClock"]
+    end
+    R --> UC --> PO
+    UC --> DS --> M
+    R --> S
+    RES -. implementa .-> PO
+    RES --> LLM --> CL
+    RES --> LOC
+    SQL -. implementa .-> PO
+    MISC -. implementa .-> PO

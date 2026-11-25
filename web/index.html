@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kallpa · Alimentación con hierro para tu niño</title>
+  <meta name="description" content="Kallpa ayuda a las familias de Abancay a prevenir la anemia infantil: foto del plato, hierro estimado, recordatorio del suplemento y recetas locales.">
+  <meta name="theme-color" content="#7a1f2b">
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><div class="logo">K</div><div><h1>Kallpa</h1><small>Wawanchikpa kallpan · La fuerza de nuestros niños</small></div></div>
+  <nav><a href="#" id="salir" hidden>Cambiar código</a><a href="/panel">Personal de salud</a></nav>
+</header>
+
+<main>
+  <!-- Ingreso -->
+  <section id="v-login" class="login">
+    <div class="hero" style="display:block">
+      <h2>Prevengamos la anemia juntos</h2>
+      <p>En Apurímac, más de la mitad de los niños de 6 a 35 meses tiene anemia. Con una foto del plato, Kallpa calcula cuánto hierro come tu niño, te recuerda su suplemento y te sugiere recetas con alimentos de la zona.</p>
+    </div>
+    <div class="card">
+      <div class="tabs"><button class="btn" id="t-codigo">Tengo código</button><button class="btn sec" id="t-nuevo">Registrarme</button></div>
+      <form id="f-codigo">
+        <label for="codigo">Código familiar (te lo da el establecimiento de salud)</label>
+        <input type="text" id="codigo" placeholder="K-XXXXX" autocomplete="off" style="text-transform:uppercase">
+        <div style="margin-top:12px"><button class="btn block">Ingresar</button></div>
+        <p class="muted" id="demo-hint"></p>
+      </form>
+      <form id="f-nuevo" hidden>
+        <div class="formgrid">
+          <div><label for="n-alias">Alias del niño/a</label><input type="text" id="n-alias" maxlength="30" placeholder="Ej.: Killa"></div>
+          <div><label for="n-nac">Fecha de nacimiento</label><input type="date" id="n-nac"></div>
+          <div><label for="n-sector">Sector</label><select id="n-sector"></select></div>
+          <div><label for="n-cuid">Tu alias</label><input type="text" id="n-cuid" maxlength="30" placeholder="Ej.: mamá de Killa"></div>
+        </div>
+        <label style="font-weight:400;display:flex;gap:8px;align-items:flex-start;margin-top:12px">
+          <input type="checkbox" id="n-ok"> <span class="muted">Acepto que Kallpa guarde las comidas y registros del suplemento de mi niño para que el establecimiento de salud me acompañe. No se pide DNI ni nombre completo. Puedo pedir que se borren mis datos.</span>
+        </label>
+        <div style="margin-top:12px"><button class="btn block">Crear mi código</button></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Panel familiar -->
+  <section id="v-app" hidden>
+    <div class="grid kpis" id="kpis"></div>
+
+    <div class="grid two" style="margin-top:16px">
+      <section class="card">
+        <h2>📸 ¿Qué comió hoy? <span class="pill">IA</span></h2>
+        <form id="f-comida">
+          <div class="photo-drop" id="drop" tabindex="0" role="button" aria-label="Tomar foto del plato">
+            <span id="drop-txt">Toca para tomar una foto del plato (solo el plato)</span>
+            <img id="preview" alt="" hidden>
+          </div>
+          <input type="file" id="foto" accept="image/*" capture="environment" hidden>
+          <label for="desc">O describe la comida <span class="muted">(español o quechua)</span></label>
+          <textarea id="desc" maxlength="600" placeholder="Ej.: puré de papa con 2 cucharadas de hígado y jugo de naranja / huk tortilla runtu yawarwan"></textarea>
+          <div style="margin-top:10px"><button class="btn block" id="b-comida">Calcular hierro</button></div>
+        </form>
+        <div id="r-comida" aria-live="polite"></div>
+      </section>
+
+      <section class="card">
+        <h2>💊 Suplemento de hierro de hoy</h2>
+        <p class="muted" id="esquema"></p>
+        <div class="row">
+          <button class="btn" id="sup-si">✅ Sí le di</button>
+          <button class="btn danger" id="sup-no">No le di</button>
+        </div>
+        <label for="sup-nota">¿Alguna molestia o motivo? <span class="muted">(opcional)</span></label>
+        <input type="text" id="sup-nota" maxlength="200" placeholder="Ej.: se le acabó, vomitó, estreñimiento, no quiere">
+        <p class="muted">Kallpa no indica dosis: sigue solo lo que te indicó el establecimiento de salud.</p>
+        <h2 style="margin-top:14px">📅 Últimos 7 días</h2>
+        <div class="week" id="week"></div>
+        <p class="muted">Barras: hierro de las comidas registradas (mg). 💊 = suplemento dado.</p>
+      </section>
+    </div>
+
+    <div class="grid two" style="margin-top:16px">
+      <section class="card">
+        <h2>🍲 Recetas sugeridas para completar el día</h2>
+        <div class="list" id="recetas" style="max-height:none"></div>
+      </section>
+      <section class="card">
+        <h2>💬 Pregúntale a Kallpa</h2>
+        <div class="chat" id="chat"><div class="msg bot">Allillanchu! Pregúntame qué alimentos tienen más hierro, qué hacer si tu niño no quiere el suplemento o cómo preparar sangrecita. Puedes escribir en quechua.</div></div>
+        <form id="f-chat" class="row"><input type="text" id="preg" placeholder="Ej.: ¿El té quita el hierro?" style="flex:1" maxlength="500"><button class="btn">Enviar</button></form>
+        <h2 style="margin-top:16px">🤝 Uso responsable de la IA</h2>
+        <ul class="muted" style="padding-left:18px;margin:0">
+          <li>Kallpa <b>no diagnostica</b> anemia ni indica dosis: eso lo hace el establecimiento de salud.</li>
+          <li>La IA solo reconoce los alimentos; el hierro se calcula con una <b>tabla de alimentos</b> y te mostramos su confianza.</li>
+          <li>Si en la foto aparece una persona, la foto <b>no se guarda</b>.</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+</main>
+<footer>Kallpa · Proyecto estudiantil para SLAY HACKS 2026 · Datos de demostración simulados · Valores nutricionales referenciales</footer>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/familia.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "_nota": "Sectores y establecimientos con coordenadas APROXIMADAS para la demo. Reemplazar con RENIPRESS (MINSA) y la sectorización oficial de la Red de Salud Abancay antes de un piloto.",
+  "centro": {"lat": -13.6339, "lng": -72.8814},
+  "establecimiento": {"nombre": "Establecimiento de salud (referencial)", "lat": -13.6318, "lng": -72.8752},
+  "sectores": [
+    {"nombre": "Centro histórico", "lat": -13.6339, "lng": -72.8814},
+    {"nombre": "Las Américas", "lat": -13.6448, "lng": -72.8868},
+    {"nombre": "Villa Ampay", "lat": -13.6245, "lng": -72.8790},
+    {"nombre": "Tamburco", "lat": -13.6195, "lng": -72.8705},
+    {"nombre": "Patibamba", "lat": -13.6425, "lng": -72.8765},
+    {"nombre": "Condebamba", "lat": -13.6395, "lng": -72.8905},
+    {"nombre": "Centenario", "lat": -13.6295, "lng": -72.8860},
+    {"nombre": "Bellavista", "lat": -13.6285, "lng": -72.8775},
+    {"nombre": "Llañucancha", "lat": -13.6480, "lng": -72.8960}
+  ]
+}
